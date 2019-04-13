@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/home/jesse/bouncing_balls/conan_test/build",
+  "command": "/usr/bin/x86_64-linux-gnu-g++-5   -I/home/jesse/.conan/data/sfml/2.5.1/bincrafters/stable/package/f6b4d5490003e59f73cd75a386f84b51768d059a/include -I/home/jesse/.conan/data/freetype/2.9.0/bincrafters/stable/package/ba5132417adfd28451246c86901cf65af2c937bd/include -I/home/jesse/.conan/data/freetype/2.9.0/bincrafters/stable/package/ba5132417adfd28451246c86901cf65af2c937bd/include/freetype2 -I/home/jesse/.conan/data/stb/20180214/conan/stable/package/5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9/include -I/home/jesse/.conan/data/libpng/1.6.34/bincrafters/stable/package/f3265e188a4c0390ca9ee1c46374da237422c564/include -I/home/jesse/.conan/data/bzip2/1.0.6/conan/stable/package/4e52334bde46f4af000da5d25b5f7af8ed83c2af/include -I/home/jesse/.conan/data/zlib/1.2.11/conan/stable/package/d280c6ed59dd8c0182cbb7cdd2ea08d0b573fb99/include     -g    -std=c++11 -DSTB_TEXTEDIT_KEYTYPE=unsigned -DSFML_STATIC -o CMakeFiles/BouncingBalls.dir/Main.cpp.o -c /home/jesse/bouncing_balls/conan_test/Main.cpp",
+  "file": "/home/jesse/bouncing_balls/conan_test/Main.cpp"
+}
+]

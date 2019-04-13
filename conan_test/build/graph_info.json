@@ -1,0 +1,87 @@
+{
+ "profile": "[settings]\narch=x86_64\nbuild_type=Release\ncompiler=gcc\ncompiler.libcxx=libstdc++11\ncompiler.version=5.4\nos=Linux\n[options]\n[build_requires]\n[env]\n",
+ "options": [
+  [
+   "bzip2:build_executable",
+   "True"
+  ],
+  [
+   "bzip2:fPIC",
+   "True"
+  ],
+  [
+   "bzip2:shared",
+   "False"
+  ],
+  [
+   "freetype:fPIC",
+   "True"
+  ],
+  [
+   "freetype:shared",
+   "False"
+  ],
+  [
+   "freetype:with_bzip2",
+   "True"
+  ],
+  [
+   "freetype:with_png",
+   "True"
+  ],
+  [
+   "freetype:with_zlib",
+   "True"
+  ],
+  [
+   "libpng:fPIC",
+   "True"
+  ],
+  [
+   "libpng:shared",
+   "False"
+  ],
+  [
+   "sfml:audio",
+   "False"
+  ],
+  [
+   "sfml:fPIC",
+   "True"
+  ],
+  [
+   "sfml:graphics",
+   "True"
+  ],
+  [
+   "sfml:network",
+   "False"
+  ],
+  [
+   "sfml:shared",
+   "False"
+  ],
+  [
+   "sfml:window",
+   "True"
+  ],
+  [
+   "zlib:fPIC",
+   "True"
+  ],
+  [
+   "zlib:minizip",
+   "False"
+  ],
+  [
+   "zlib:shared",
+   "False"
+  ]
+ ],
+ "root": {
+  "version": null,
+  "user": null,
+  "name": null,
+  "channel": null
+ }
+}

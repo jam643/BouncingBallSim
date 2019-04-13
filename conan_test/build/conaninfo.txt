@@ -1,0 +1,56 @@
+[settings]
+    arch=x86_64
+    build_type=Release
+    compiler=gcc
+    compiler.libcxx=libstdc++11
+    compiler.version=5.4
+    os=Linux
+
+[requires]
+    sfml/2.Y.Z
+
+[options]
+
+
+[full_settings]
+    arch=x86_64
+    build_type=Release
+    compiler=gcc
+    compiler.libcxx=libstdc++11
+    compiler.version=5.4
+    os=Linux
+
+[full_requires]
+    bzip2/1.0.6@conan/stable:4e52334bde46f4af000da5d25b5f7af8ed83c2af
+    freetype/2.9.0@bincrafters/stable:ba5132417adfd28451246c86901cf65af2c937bd
+    libpng/1.6.34@bincrafters/stable:f3265e188a4c0390ca9ee1c46374da237422c564
+    sfml/2.5.1@bincrafters/stable:f6b4d5490003e59f73cd75a386f84b51768d059a
+    stb/20180214@conan/stable:5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9
+    zlib/1.2.11@conan/stable:d280c6ed59dd8c0182cbb7cdd2ea08d0b573fb99
+
+[full_options]
+    bzip2:build_executable=True
+    bzip2:fPIC=True
+    bzip2:shared=False
+    freetype:fPIC=True
+    freetype:shared=False
+    freetype:with_bzip2=True
+    freetype:with_png=True
+    freetype:with_zlib=True
+    libpng:fPIC=True
+    libpng:shared=False
+    sfml:audio=False
+    sfml:fPIC=True
+    sfml:graphics=True
+    sfml:network=False
+    sfml:shared=False
+    sfml:window=True
+    zlib:fPIC=True
+    zlib:minizip=False
+    zlib:shared=False
+
+[recipe_hash]
+
+
+[env]
+
