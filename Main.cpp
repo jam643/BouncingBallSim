@@ -13,7 +13,7 @@ date: 8/25/18
 #include <iostream>
 #include <string>
 #include <stdexcept>
-#include <stdlib.h> 
+#include <stdlib.h>
 #include <math.h>
 #include <sstream>
 
@@ -23,36 +23,40 @@ using namespace std;
 int WINDOW_SIZE = 600;
 
 // abstract class representing a physical object with dynamics
-class physical {
-protected:
-	const float G = 1; //accel of gravity [m/s^2]
-	const int PIXEL_PER_METER = 6671; //pixel per meter of screen
-	const int ZOOM = 30; // how far zoomed out
+class physical
+{
+  protected:
+	const float G = 1;								   //accel of gravity [m/s^2]
+	const int PIXEL_PER_METER = 6671;				   //pixel per meter of screen
+	const int ZOOM = 30;							   // how far zoomed out
 	const float SCALE = float(PIXEL_PER_METER / ZOOM); // scaling factor
-public:
+  public:
 	// state [m] and [m/s]
 	float x, y, xdot, ydot;
 	// vector to store state
 	sf::Vector2f z;
 	sf::Vector2f zdot;
 
-	virtual void draw(sf::RenderWindow& window) = 0;
+	virtual void draw(sf::RenderWindow &window) = 0;
 };
 
 //bouncing ball
-class ball : public physical {
-private:
+class ball : public physical
+{
+  private:
 	// coefficient of restitution of ball against walls
 	const float coef_rest = 0.8;
-public:
+
+  public:
 	float KE; // kinetic energy
 	float radius;
 	sf::CircleShape shape;
-	bool collide; // true iff in colliding state with other ball
+	bool collide;		 // true iff in colliding state with other ball
 	static size_t count; // counts # of balls instantiated
 
 	//constructor specifying state and size
-	ball(float x, float y, float xdot, float ydot, float rad){
+	ball(float x, float y, float xdot, float ydot, float rad)
+	{
 		z.x = x;
 		z.y = y;
 		zdot.x = xdot;
@@ -65,7 +69,8 @@ public:
 	}
 
 	// constructor sets random pose/size
-	ball(){	
+	ball()
+	{
 		// random pose
 		z.x = rand() % WINDOW_SIZE;
 		z.y = rand() % WINDOW_SIZE;
@@ -84,15 +89,17 @@ public:
 	}
 
 	// determine if two balls are colliding and updates their states
-	static void collide_ball(ball& b1, ball& b2) {
+	static void collide_ball(ball &b1, ball &b2)
+	{
 		//distance between centers [m]
 		float dist = sqrt(pow(b2.z.x - b1.z.x, 2) + pow(b2.z.y - b1.z.y, 2));
 		//normalized vector from b1 to b2
-		sf::Vector2f n_hat((b2.z.x - b1.z.x)/dist,(b2.z.y - b1.z.y)/dist);
+		sf::Vector2f n_hat((b2.z.x - b1.z.x) / dist, (b2.z.y - b1.z.y) / dist);
 		// overlap distance [m]
 		float overlap = (b1.radius + b2.radius) - dist;
 
-		if (overlap >= 0) {
+		if (overlap >= 0)
+		{
 			//move both overlapping balls away from each other half overlap distance
 			b2.z.x += n_hat.x * overlap / 2;
 			b2.z.y += n_hat.y * overlap / 2;
@@ -101,22 +108,22 @@ public:
 
 			// update velocity based on conservation of energy/momentum
 			// https://en.wikipedia.org/wiki/Elastic_collision
-			float x1dot = b1.zdot.x - (2 * b2.radius / (b1.radius + b2.radius))*
-				((b1.zdot.x - b2.zdot.x)*(b1.z.x - b2.z.x) + (b1.zdot.y - b2.zdot.y)*(b1.z.y - b2.z.y))*
-				(b1.z.x - b2.z.x) /
-				(pow(b1.z.x - b2.z.x, 2) + pow(b1.z.y - b2.z.y, 2));
-			float y1dot = b1.zdot.y - (2 * b2.radius / (b1.radius + b2.radius))*
-				((b1.zdot.x - b2.zdot.x)*(b1.z.x - b2.z.x) + (b1.zdot.y - b2.zdot.y)*(b1.z.y - b2.z.y))*
-				(b1.z.y - b2.z.y) /
-				(pow(b1.z.x - b2.z.x, 2) + pow(b1.z.y - b2.z.y, 2));
-			float x2dot = b2.zdot.x - (2 * b1.radius / (b2.radius + b1.radius))*
-				((b2.zdot.x - b1.zdot.x)*(b2.z.x - b1.z.x) + (b2.zdot.y - b1.zdot.y)*(b2.z.y - b1.z.y))*
-				(b2.z.x - b1.z.x) /
-				(pow(b2.z.x - b1.z.x, 2) + pow(b2.z.y - b1.z.y, 2));
-			float y2dot = b2.zdot.y - (2 * b1.radius / (b2.radius + b1.radius))*
-				((b2.zdot.x - b1.zdot.x)*(b2.z.x - b1.z.x) + (b2.zdot.y - b1.zdot.y)*(b2.z.y - b1.z.y))*
-				(b2.z.y - b1.z.y) /
-				(pow(b2.z.x - b1.z.x, 2) + pow(b2.z.y - b1.z.y, 2));
+			float x1dot = b1.zdot.x - (2 * b2.radius / (b1.radius + b2.radius)) *
+										  ((b1.zdot.x - b2.zdot.x) * (b1.z.x - b2.z.x) + (b1.zdot.y - b2.zdot.y) * (b1.z.y - b2.z.y)) *
+										  (b1.z.x - b2.z.x) /
+										  (pow(b1.z.x - b2.z.x, 2) + pow(b1.z.y - b2.z.y, 2));
+			float y1dot = b1.zdot.y - (2 * b2.radius / (b1.radius + b2.radius)) *
+										  ((b1.zdot.x - b2.zdot.x) * (b1.z.x - b2.z.x) + (b1.zdot.y - b2.zdot.y) * (b1.z.y - b2.z.y)) *
+										  (b1.z.y - b2.z.y) /
+										  (pow(b1.z.x - b2.z.x, 2) + pow(b1.z.y - b2.z.y, 2));
+			float x2dot = b2.zdot.x - (2 * b1.radius / (b2.radius + b1.radius)) *
+										  ((b2.zdot.x - b1.zdot.x) * (b2.z.x - b1.z.x) + (b2.zdot.y - b1.zdot.y) * (b2.z.y - b1.z.y)) *
+										  (b2.z.x - b1.z.x) /
+										  (pow(b2.z.x - b1.z.x, 2) + pow(b2.z.y - b1.z.y, 2));
+			float y2dot = b2.zdot.y - (2 * b1.radius / (b2.radius + b1.radius)) *
+										  ((b2.zdot.x - b1.zdot.x) * (b2.z.x - b1.z.x) + (b2.zdot.y - b1.zdot.y) * (b2.z.y - b1.z.y)) *
+										  (b2.z.y - b1.z.y) /
+										  (pow(b2.z.x - b1.z.x, 2) + pow(b2.z.y - b1.z.y, 2));
 			b1.zdot.x = x1dot;
 			b1.zdot.y = y1dot;
 			b2.zdot.x = x2dot;
@@ -125,53 +132,62 @@ public:
 	}
 
 	//inelastic collision with call
-	void collide_wall() {
-		if (z.x + radius > WINDOW_SIZE) {
-			zdot.x = -coef_rest*zdot.x;
+	void collide_wall()
+	{
+		if (z.x + radius > WINDOW_SIZE)
+		{
+			zdot.x = -coef_rest * zdot.x;
 			z.x = WINDOW_SIZE - radius;
 		}
-		else if (z.x < radius) {
-			zdot.x = -coef_rest*zdot.x;
+		else if (z.x < radius)
+		{
+			zdot.x = -coef_rest * zdot.x;
 			z.x = radius;
 		}
-		if (z.y + radius > WINDOW_SIZE) {
-			zdot.y = -coef_rest*zdot.y;
+		if (z.y + radius > WINDOW_SIZE)
+		{
+			zdot.y = -coef_rest * zdot.y;
 			z.y = WINDOW_SIZE - radius;
 		}
-		else if (z.y < radius) {
-			zdot.y = -coef_rest*zdot.y;
+		else if (z.y < radius)
+		{
+			zdot.y = -coef_rest * zdot.y;
 			z.y = radius;
 		}
 	}
 
 	//update state using Euler integration
-	void update(float& dt,sf::Vector2i m, sf::Mouse mouse) {
-		
+	void update(float &dt, sf::Vector2i m, sf::Mouse mouse)
+	{
+
 		// if left/right mouse click set inverse linear acceleration
 		bool isLeft = mouse.isButtonPressed(sf::Mouse::Button::Left);
 		bool isRight = mouse.isButtonPressed(sf::Mouse::Button::Right);
 		float accel_mouse;
-		if (isLeft || isRight){
+		if (isLeft || isRight)
+		{
 			float d_to_mouse = sqrt(pow(z.x - m.x, 2) + pow(z.y - m.y, 2)) / SCALE;
 			// inverse linear accel with small offset to avoid undefined near center
 			accel_mouse = 1.0 / (pow(d_to_mouse + 0.1, 3));
 		}
-		else {
+		else
+		{
 			accel_mouse = 0;
 		}
 
 		// attractive accel if right mouse
-		if (isRight) {
+		if (isRight)
+		{
 			accel_mouse = -accel_mouse;
 		}
 
 		//euler integration of velocity
-		zdot.y += (G + accel_mouse*(z.y - m.y)/SCALE)*dt;
-		zdot.x += (accel_mouse*(z.x - m.x)/SCALE)*dt;
+		zdot.y += (G + accel_mouse * (z.y - m.y) / SCALE) * dt;
+		zdot.x += (accel_mouse * (z.x - m.x) / SCALE) * dt;
 
 		//euler integration of pose
-		z.x += zdot.x*dt*SCALE;
-		z.y += zdot.y*dt*SCALE;
+		z.x += zdot.x * dt * SCALE;
+		z.y += zdot.y * dt * SCALE;
 
 		// update kinetic energy
 		KE = 0.5 * radius * (pow(zdot.x, 2) + pow(zdot.y, 2));
@@ -179,7 +195,8 @@ public:
 		shape.setPosition(z);
 	}
 
-	void draw(sf::RenderWindow& window) {
+	void draw(sf::RenderWindow &window)
+	{
 		window.draw(shape);
 	}
 };
@@ -192,12 +209,12 @@ int main()
 
 	float dt;
 	int FPS = 200;
-	sf::Time period = sf::seconds((float) 1 / FPS);
+	sf::Time period = sf::seconds((float)1 / FPS);
 	size_t num_balls = 70;
 
 	sf::Clock clock;
 
-	vector <ball> ball_vect(num_balls);
+	vector<ball> ball_vect(num_balls);
 
 	//create balls by specifying initial pose
 	//vector <ball> ball_vect;
@@ -210,7 +227,7 @@ int main()
 
 	// Declare and load a font
 	sf::Font font;
-	font.loadFromFile("Courier Prime Code.ttf");
+	font.loadFromFile("CourierPrimeCode.ttf");
 
 	// Create text object to display kinetic energy
 	sf::Text ke_text("", font);
@@ -227,7 +244,7 @@ int main()
 	fps_text.setFillColor(sf::Color::White);
 	fps_text.setOutlineColor(sf::Color::Black);
 	fps_text.setOutlineThickness(1.0);
-	fps_text.setPosition(WINDOW_SIZE-200,0);
+	fps_text.setPosition(WINDOW_SIZE - 200, 0);
 
 	// used to reduce rate of text updating
 	double text_update_timer = 0;
@@ -252,20 +269,22 @@ int main()
 		float totalKE = 0; // init total kinetic energy
 
 		// iter through all balls in vector and update state
-		for (auto it = begin(ball_vect); it != end(ball_vect); ++it) {
+		for (auto it = begin(ball_vect); it != end(ball_vect); ++it)
+		{
 
 			//order matters!
 			// check collision with all other balls
-			for (auto obj = it + 1; obj != end(ball_vect); ++obj) {
+			for (auto obj = it + 1; obj != end(ball_vect); ++obj)
+			{
 				ball::collide_ball(*it, *obj);
 			}
 
 			sf::Vector2i mouse_pose = mouse.getPosition(window);
- 
+
 			it->collide_wall();
 
 			//update state
-			it->update(dt,mouse_pose,mouse);
+			it->update(dt, mouse_pose, mouse);
 
 			totalKE += it->KE;
 
@@ -273,9 +292,10 @@ int main()
 		}
 
 		text_update_timer += dt;
-		
+
 		// update text occasionally
-		if (text_update_timer > 0.1){
+		if (text_update_timer > 0.1)
+		{
 			text_update_timer = 0;
 
 			// update kinetic energy
