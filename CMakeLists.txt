@@ -6,5 +6,5 @@
  include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
  conan_basic_setup()
 
- add_executable(BouncingBalls Main.cpp)
+ add_executable(BouncingBalls BouncingBalls.cpp)
  target_link_libraries(BouncingBalls ${CONAN_LIBS})
